@@ -1,0 +1,27 @@
+
+spring:
+  application:
+    name: task-test
+    max-sensor-call-retries: 3
+    sensor-call-trial-interval: 30000
+  datasource:
+    url: jdbc:mysql://localhost:3306/test
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        enable_lazy_load_no_trans: true
