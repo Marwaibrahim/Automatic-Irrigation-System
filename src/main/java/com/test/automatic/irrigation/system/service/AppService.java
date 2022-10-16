@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
-public class LandService {
+public class AppService {
     @Autowired
     private LandRepository landRepository;
 

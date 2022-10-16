@@ -3,7 +3,7 @@ package com.test.automatic.irrigation.system.tasks;
 import com.test.automatic.irrigation.system.entity.SensorDevice;
 import com.test.automatic.irrigation.system.entity.TimeSlot;
 import com.test.automatic.irrigation.system.enums.TimeSlotStatus;
-import com.test.automatic.irrigation.system.service.LandService;
+import com.test.automatic.irrigation.system.service.AppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class IrrigationTasks {
 
     @Autowired
-    private LandService landService;
+    private AppService appService;
 
     @Value("${spring.application.max-sensor-call-retries}")
     private int MAX_RETRIES;
@@ -26,10 +26,10 @@ public class IrrigationTasks {
 
     @Scheduled(fixedDelay = 60000)
     public void irrigatePlots() {
-        List<TimeSlot> readySlots = landService.getReadySlots();
+        List<TimeSlot> readySlots = appService.getReadySlots();
         readySlots.stream().forEach(s -> {
             s.setStatus(TimeSlotStatus.PROCESSING);
-            landService.saveTimeSlot(s);
+            appService.saveTimeSlot(s);
         });
 
         System.out.println(readySlots);
@@ -51,7 +51,7 @@ public class IrrigationTasks {
                 System.out.println("Alert the System");
             }
             s.setStatus(isSuccess ? TimeSlotStatus.DONE : TimeSlotStatus.ERROR);
-            landService.saveTimeSlot(s);
+            appService.saveTimeSlot(s);
         });
 
 
